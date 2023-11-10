@@ -2,17 +2,14 @@
 var startScreen = document.getElementById("start-screen");
 var timerEl = document.getElementById("time");
 var questionsContainer = document.getElementById("questions");
-var submitButton = document.getElementById("submit");
+var choicesContainer = document.getElementById("choices");
+var feedbackContainer = document.getElementById("feedback");
 // create variable for start button
 var startButton = document.getElementById("start");
 
 // Add an evenlistener to the start quiz button
 
 startButton.addEventListener("click", startQuiz);
-
-// Add another event listener so that when the submit button is clicked the score is saved
-
-submitButton.addEventListener("click", setTimer);
 
 // set initial time variable
 var timeLeft = 60;
@@ -24,7 +21,7 @@ var timerInterval;
 
 function startQuiz() {
 //    start screen needs to disappear and 
-    startButton.style.display = "none";
+    startScreen.style.display = "none";
 //    set interval 
     var timerInterval = setInterval(function () {
 //    time should be decreasing
@@ -44,27 +41,49 @@ function startQuiz() {
 
 // function that displays a question
 function showQuestion() {
-    // retieve current question, its answers and the correct answer from the questions array
-        var currentQuestion = quizQuestions[currentQuestionIndex];
-        questionsContainer.classList.remove("hide");
-    // SHows current question's title
-        document.getElementById("question-title").textContent = currentQuestion.question;
-    //   remove choices from prev questions
-        choicesContainer.innerHTML = "";
-    //   for loop that creates button for each answer choice
-        for (var i = 0; i < currentQuestion.answers.length; i++) {
-            var choiceButton = document.createElement("button");
-            choiceButton.textContent = currentQuestion.answers[i];
-    
-        }
-    }
+ // retieve current question, its answers and the correct answer from the questions array
+    var currentQuestion = quizQuestions[currentQuestionIndex];
+    questionsContainer.classList.remove("hide");
+// SHows current question's title
+    document.getElementById("question-title").textContent = currentQuestion.question;
+//   remove choices from prev questions
+    choicesContainer.innerHTML = "";
+//   for loop that creates button for each answer choice
+    for (var i = 0; i < currentQuestion.answers.length; i++) {
+         var choiceButton = document.createElement("button");
+        choiceButton.textContent = currentQuestion.answers[i];
+        choiceButton.addEventListener("click", checkAnswer);
+        choicesContainer.appendChild(choiceButton);
+    };
+}
 
 
 
 // function that checks answer
+function checkAnswer(event) {
 //  store user selected answer
-//  correct answer
+    var selectedAnswer = event.target.textContent;
+//  correct answer   
+    var correctAnswer = quizQuestions[currentQuestionIndex].correctAnswer;
 //  if statement that compares selected anser to correct answer
+    if (selectedAnswer === correctAnswer) {
+        feedbackContainer.textContent = "Correct!";
+//  if incorrect - 10 seconds
+    } else {
+        feedbackContainer.textContent = "Incorrect!";
+        timeLeft -= 10;
+    }
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex === quizQuestions.length) {
+        endQuiz();
+    } else {
+        showQuestion();
+    }
+}
+
+
+
 //  if incorrect - 10 seconds
 //  move to next question
 
