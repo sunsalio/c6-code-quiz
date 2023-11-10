@@ -4,6 +4,10 @@ var timerEl = document.getElementById("time");
 var questionsContainer = document.getElementById("questions");
 var choicesContainer = document.getElementById("choices");
 var feedbackContainer = document.getElementById("feedback");
+var endScreen = document.getElementById("end-screen");
+var finalScoreEl = document.getElementById("final-score");
+var initialsInput = document.getElementById("initials");
+var submitButton = document.getElementById("submit");
 // create variable for start button
 var startButton = document.getElementById("start");
 
@@ -23,7 +27,7 @@ function startQuiz() {
 //    start screen needs to disappear and 
     startScreen.style.display = "none";
 //    set interval 
-    var timerInterval = setInterval(function () {
+    timerInterval = setInterval(function () {
 //    time should be decreasing
         timeLeft--;
 //    updates time left       
@@ -78,27 +82,42 @@ function checkAnswer(event) {
     if (currentQuestionIndex === quizQuestions.length) {
         endQuiz();
     } else {
+//  move to next question        
         showQuestion();
     }
 }
 
 
 
-//  if incorrect - 10 seconds
-//  move to next question
-
-
 // function that ends quiz 
-//   stop the timer by clearinterval
-//   hide the questions from screen
+function endQuiz() {
+//   stop the timer by clearinterval   
+    clearInterval(timerInterval);
+//   hide the questions from screen    
+    questionsContainer.classList.add("hide");
 //   show end screen
-//   time left is the score 
+    endScreen.classList.remove("hide");
 //   save users intials and score
-//   
+    finalScoreEl.textContent = timeLeft;
+
+    var initials = initialsInput.value;
+    saveScore(initials, timeLeft);
+}
+
+
+
 
 // function that saves score
+function saveScore() {
 //   initialise array to save high scores  = empty array
+    var highscores = [];
 //   addd new score
+    highscores.push({initials: initials, score: score});
+//   save highscore to local storage
+    localStorage.setItem("highscores", JSON.stringify(highscores));
+}
+
+
 //   save highscore to local storage
 
 
