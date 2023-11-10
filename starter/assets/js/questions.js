@@ -1,4 +1,4 @@
-
+// an array of objects
 
 var quizQuestions = [
     {
