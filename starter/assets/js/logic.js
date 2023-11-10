@@ -1,9 +1,10 @@
+import { quizQuestions } from "./questions";
+
 var startScreen = document.getElementById("#start-screen");
-
-var questionsDiv = document.getElementById("#questions");
-
+var timerEl = document.getElementById("#time");
+var questionsContainer = document.getElementById("#questions");
+var submitButton = document.getElementById("#submit");
 // create variable for start button
-
 var startButton = document.getElementById("#start");
 
 // Add an evenlistener to the start quiz button
@@ -11,27 +12,35 @@ var startButton = document.getElementById("#start");
 startButton.addEventListener("click", startQuiz);
 
 // Add another event listener so that when the submit button is clicked the score is saved
-var submitButton = document.getElementById("#submit");
+
 submitButton.addEventListener("click", setTimer);
 
 // set initial time variable
+var timeLeft = 60;
 // current question variable that equals to zero
+var currentQuestionIndex = 0;
+var timerInterval;
 
 // Write the startquiz function that will run  when start button is clicked
 
 function startQuiz() {
-
-}
 //    start screen needs to disappear and 
-
-//    set interval
+    startButton.style.display = "none";
+//    set interval 
+    var timerInterval = setInterval(function () {
 //    time should be decreasing
-//    updates time left
-//    text that shows time left
-
+        timeLeft--;
+//    updates time left       
+        timerEl.textContent = timeLeft;
 //  if statement so if time left is equal to 0 or question index reaches .length the quiz ends ->function
+        if (timeLeft <= 0 || currentQuestionIndex === quizQuestions.length) {
+            endQuiz();
+        }
 //   time decreases every 1000 ms
+    }, 1000);
 // call function that shows questions
+    showQuestion();
+}
 
 
 
