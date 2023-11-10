@@ -31,4 +31,3 @@ var quizQuestions = [
 ];
 
 // Export the questions array so it can be imported in the logic javascript file
-export {quizQuestions};

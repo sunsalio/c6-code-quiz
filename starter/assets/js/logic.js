@@ -1,11 +1,10 @@
-import { quizQuestions } from "./questions";
 
-var startScreen = document.getElementById("#start-screen");
-var timerEl = document.getElementById("#time");
-var questionsContainer = document.getElementById("#questions");
-var submitButton = document.getElementById("#submit");
+var startScreen = document.getElementById("start-screen");
+var timerEl = document.getElementById("time");
+var questionsContainer = document.getElementById("questions");
+var submitButton = document.getElementById("submit");
 // create variable for start button
-var startButton = document.getElementById("#start");
+var startButton = document.getElementById("start");
 
 // Add an evenlistener to the start quiz button
 
@@ -43,12 +42,22 @@ function startQuiz() {
 }
 
 
-
 // function that displays a question
-//   retieve current question, its answers and the correct answer from the questions array
-//   remove choices from prev questions
-//   for loop that creates button for each anser choice
-
+function showQuestion() {
+    // retieve current question, its answers and the correct answer from the questions array
+        var currentQuestion = quizQuestions[currentQuestionIndex];
+        questionsContainer.classList.remove("hide");
+    // SHows current question's title
+        document.getElementById("question-title").textContent = currentQuestion.question;
+    //   remove choices from prev questions
+        choicesContainer.innerHTML = "";
+    //   for loop that creates button for each answer choice
+        for (var i = 0; i < currentQuestion.answers.length; i++) {
+            var choiceButton = document.createElement("button");
+            choiceButton.textContent = currentQuestion.answers[i];
+    
+        }
+    }
 
 
 
