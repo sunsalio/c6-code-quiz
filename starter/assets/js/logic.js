@@ -108,9 +108,9 @@ function endQuiz() {
 
 
 // function that saves score
-function saveScore() {
+function saveScore(initials, score) {
 //   initialise array to save high scores  = empty array
-    var highscores = [];
+    var highscores = JSON.parse(localStorage.getItem("highscores")) || [];
 //   addd new score
     highscores.push({initials: initials, score: score});
 //   save highscore to local storage
@@ -118,10 +118,23 @@ function saveScore() {
 }
 
 
-//   save highscore to local storage
-
 
 // function that displays highscore
-//   establish container for highscore
+function displayHighscores() {
+//  establish container for highscore
+    var highscoresContainer = document.getElementById("highscores");
 //   clear existingcontent
+    highscoresContainer.innerHTML = "";
 //   retieve highscore from local storage
+    var highscores = JSON.parse(localStorage.getItem("highscores")) || [];
+
+// display highscores in orderede list
+    highscores.forEach(function (score) {
+        var li = document.createElement("li");
+        li.textContent = score.initials + ": " + score.score;
+        highscoresContainer.appendChild(li);
+    });
+}
+
+// Initials do not show up in local storage and i dont know how to retiever users info when view highscores is clicked.
+
